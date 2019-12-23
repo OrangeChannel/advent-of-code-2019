@@ -1,5 +1,5 @@
 """
-342 chars, 12 lines, 494ms
+341 chars, 12 lines, 494ms
 things wrong with this solution:
 - won't print part 2 if same values as (12,2) from part 1
 - doesn't check for incorrect optcodes, nor incorrect length of list
@@ -11,7 +11,7 @@ def i(l):
   if l[k]==1:l[l[k+3]]=l[l[k+1]]+l[l[k+2]]
   elif l[k]==2:l[l[k+3]]=l[l[k+1]]*l[l[k+2]]
  return l[0]
-from itertools import *
+from itertools import*
 for o,p in product(range(100),repeat=2):
  n=[int(_)for _ in list(open('2'))[0].split(',')]
  n[1:3]=[o,p]
