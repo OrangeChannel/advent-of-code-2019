@@ -1,12 +1,4 @@
-"""
-329 chars, 8 lines, 2 imports, 17.0 ms
-"""
-import math, fileinput
-fuel, start = lambda i: math.floor(int(i) / 3) - 2, 0
-print('Part 1: {}'.format(sum([fuel(i) for i in fileinput.input('day01_input.txt')])))
-for i in fileinput.input('1'):
-    if (x := fuel(i)) > 0:
-        start += x
-        while fuel(x) > 0:
-            start += (x := fuel(x))
-print('Part 2: {}'.format(start))
+"""145 chars, 3 lines, 0 imports, 16.5 ms"""
+f=[i for i in open('1')]
+print(sum([(c:=lambda m:int(m)//3-2)(i)for i in f]))
+print(sum([(p:=lambda m:0if c(m)<=0else c(m)+p(c(m)))(i)for i in f]))

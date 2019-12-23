@@ -1,6 +1,4 @@
-"""
-20.6ms
-"""
+"""20.6ms"""
 from math import floor
 
 f = open('day01_input.txt')
