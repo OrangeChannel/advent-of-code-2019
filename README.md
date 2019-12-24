@@ -23,4 +23,20 @@ def f(l):
         if (x, y) not in p: p[(x, y)] = t
     return p
 print(min([abs(x) + abs(y) for (x, y) in h(f(a), f(b))]), min([f(a)[i] + f(b)[i] for i in h(f(a), f(b))]))
+# Day 4
+def check(part):
+    rlist = []
+    for i in range(147981, 691423):
+        if sorted(a := list(str(i))) == a:
+            for char in a:
+                (b := a[:]).remove(char)
+                if char in b:
+                    if part == 1:
+                        rlist.append(i)
+                        break
+                    if b.count(char) == 1:
+                        rlist.append(i)
+                        break
+    return len(rlist)
+print(check(1), check(2))
 ```
