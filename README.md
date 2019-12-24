@@ -24,19 +24,9 @@ def f(l):
     return p
 print(min([abs(x) + abs(y) for (x, y) in h(f(a), f(b))]), min([f(a)[i] + f(b)[i] for i in h(f(a), f(b))]))
 # Day 4
-def check(part):
-    rlist = []
-    for i in range(147981, 691423):
-        if sorted(a := list(str(i))) == a:
-            for char in a:
-                (b := a[:]).remove(char)
-                if char in b:
-                    if part == 1:
-                        rlist.append(i)
-                        break
-                    if b.count(char) == 1:
-                        rlist.append(i)
-                        break
-    return len(rlist)
-print(check(1), check(2))
+a, b = 0, 0
+for i in range(147981, 691423):
+    if sorted(r := list(str(i))) == r and len(set(r)) < len(r): a += 1
+    if sorted(r) == r and 2 in [r.count(c) for c in r]: b += 1
+print(a, b)
 ```
