@@ -1,25 +1,29 @@
-"""20.6ms"""
+# ----------------------------------- Part 1 --------------------------------- #
 from math import floor
+from typing import Union
 
-f = open('input.txt')
-
-
-def fuel(x):
-    return floor(int(x) / 3) - 2
+file = open('input.txt')
 
 
-print('Part 1: {}'.format(sum([fuel(i) for i in f])))
+def fuel(weight: Union[str, int]):
+    return floor(int(weight) / 3) - 2
 
-f.seek(0)  # reset position in file object
 
-module_fuels = []
-for key, module_weight in enumerate(f):
-    if fuel(module_weight) > 0:
-        module_fuels.append(fuel(module_weight))
-        curr_fuel = fuel(module_weight)
+print('Part 1: {}'.format(sum([fuel(line) for line in file])))
 
-        while fuel(curr_fuel) > 0:
-            curr_fuel = fuel(curr_fuel)  # recursively add fuel
-            module_fuels[key] += curr_fuel
+# ----------------------------------- Part 2 --------------------------------- #
+file.seek(0)  # reset position in file object
 
-print('Part 2: {}'.format(sum(module_fuels)))
+
+def recursive_fuel(total_weight: Union[str, int]):
+    if fuel(total_weight) > 0:
+        return fuel(total_weight) + recursive_fuel(fuel(total_weight))
+    else:
+        return 0
+
+
+print('Part 2: {}'.format(sum([recursive_fuel(line) for line in file])))
+
+# ----------------------------------- Output --------------------------------- #
+# Part 1: 3262358
+# Part 2: 4890696

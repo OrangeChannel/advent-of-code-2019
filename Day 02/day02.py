@@ -1,42 +1,46 @@
+# ----------------------------------- Part 1 --------------------------------- #
 file = open('input.txt')
-slist = file.readlines(0)[0].rstrip().split(',')
-ilist = [int(s) for s in slist]
-ilist[1] = 12
-ilist[2] = 2
+str_list = file.readline().rstrip().split(',')
+instruction_list = [int(s) for s in str_list]
 
 
-def intcode(l: list):
-    def advance(curr_k):
-        if k <= len(l) - 1 - 4:
-            return curr_k + 4
-        else:
-            return len(l) - 1
-
-    k = 0
-    while k < len(l):
-        if l[k] == 99:
+def intcode(ilist: list):
+    olist = ilist.copy()
+    for k in range(0, len(olist), 4):
+        opcode = olist[k]
+        if opcode == 99:
             break
-        elif l[k] == 1:
-            t = l[l[k + 1]] + l[l[k + 2]]
-            l[l[k + 3]] = t
-            k = advance(k)
-        elif l[k] == 2:
-            t = l[l[k + 1]] * l[l[k + 2]]
-            l[l[k + 3]] = t
-            k = advance(k)
-        else:
-            raise ValueError('Unknown opcode {} in pos {}'.format(l[k], k))
 
-    return l
+        elif opcode == 1:
+            param1 = olist[olist[k + 1]]
+            param2 = olist[olist[k + 2]]
+            loc = olist[k + 3]
+            olist[loc] = param1 + param2
+
+        elif opcode == 2:
+            param1 = olist[olist[k + 1]]
+            param2 = olist[olist[k + 2]]
+            loc = olist[k + 3]
+            olist[loc] = param1 * param2
+
+    return olist
 
 
-print('Part 1: {}'.format(intcode(ilist)[0]))
+instruction_list[1] = 12
+instruction_list[2] = 2
+
+print('Part 1: {}'.format(intcode(instruction_list)[0]))
+
+# ----------------------------------- Part 2 --------------------------------- #
+from itertools import product
 
 goal = 19690720
-for noun in range(100):
-    for verb in range(100):
-        listt = [int(s) for s in slist]
-        listt[1] = noun
-        listt[2] = verb
-        if intcode(listt)[0] == goal:
-            print('Part 2: {}'.format(100*noun+verb))
+for noun, verb in product(range(100), repeat=2):
+    instruction_list[1] = noun
+    instruction_list[2] = verb
+    if intcode(instruction_list)[0] == goal:
+        print('Part 2: {}'.format(100 * noun + verb))
+
+# ----------------------------------- Output --------------------------------- #
+# Part 1: 2782414
+# Part 2: 9820
