@@ -1,7 +1,7 @@
 """20.6ms"""
 from math import floor
 
-f = open('day01_input.txt')
+f = open('input.txt')
 
 
 def fuel(x):

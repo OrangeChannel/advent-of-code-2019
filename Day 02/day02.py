@@ -1,4 +1,4 @@
-file = open('day02_input.txt')
+file = open('input.txt')
 slist = file.readlines(0)[0].rstrip().split(',')
 ilist = [int(s) for s in slist]
 ilist[1] = 12

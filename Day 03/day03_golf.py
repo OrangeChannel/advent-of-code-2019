@@ -1,7 +1,7 @@
 """
-528 chars, 8 lines, 7.167 s
+518 chars, 8 lines, 7.167 s
 """
-a, b, c, d, h = open('3').readlines()[0].rstrip().split(','), open('3').readlines()[1].rstrip().split(','), {'L': -1, 'R': 1, 'U': 0, 'D': 0}, {'L': 0, 'R': 0, 'D': -1, 'U': 1}, lambda x, y: set(x.keys()) & set(y.keys())
+a, b, c, d, h = open('3').readlines()[0].rstrip().split(','), open('3').readlines()[1].rstrip().split(','), {'L': -1, 'R': 1, 'U': 0, 'D': 0}, {'L': 0, 'R': 0, 'D': -1, 'U': 1}, lambda x, y: x.keys() & y.keys()
 def f(l):
     p, x, y, t = {}, 0, 0, 0
     for _, i in [(_, i) for _ in l for i in range(int(_[1:]))]:

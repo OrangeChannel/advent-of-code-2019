@@ -1,6 +1,6 @@
 """ 157 ms """
-awire = open('day03_input.txt').readlines()[0].rstrip().split(',')
-bwire = open('day03_input.txt').readlines()[1].rstrip().split(',')
+awire = open('input.txt').readlines()[0].rstrip().split(',')
+bwire = open('input.txt').readlines()[1].rstrip().split(',')
 dx = {'L': -1, 'R': 1, 'U': 0, 'D': 0}
 dy = {'L': 0, 'R': 0, 'D': -1, 'U': 1}
 
