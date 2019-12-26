@@ -1,13 +1,13 @@
 # ----------------------------------- Part 1 --------------------------------- #
 file = open('input.txt')
-str_list = file.readline().rstrip().split(',')
-instruction_list = [int(s) for s in str_list]
+instruction_list = [*map(int, file.readline().split(','))]
 
 
 def intcode(ilist: list):
     olist = ilist.copy()
     for k in range(0, len(olist), 4):
         opcode = olist[k]
+
         if opcode == 99:
             break
 
@@ -26,9 +26,7 @@ def intcode(ilist: list):
     return olist
 
 
-instruction_list[1] = 12
-instruction_list[2] = 2
-
+instruction_list[1:3] = 12, 2
 print('Part 1: {}'.format(intcode(instruction_list)[0]))
 
 # ----------------------------------- Part 2 --------------------------------- #
@@ -36,10 +34,11 @@ from itertools import product
 
 goal = 19690720
 for noun, verb in product(range(100), repeat=2):
-    instruction_list[1] = noun
-    instruction_list[2] = verb
+    instruction_list[1:3] = noun, verb
+
     if intcode(instruction_list)[0] == goal:
         print('Part 2: {}'.format(100 * noun + verb))
+        break
 
 # ----------------------------------- Output --------------------------------- #
 # Part 1: 2782414
