@@ -20,7 +20,7 @@ print('Part 2: {}'.format(part2))
 # Part 1: 1790
 # Part 2: 1206
 
-# ----------------------------------- Notes --------------------------------- #
+# ----------------------------------- Notes ---------------------------------- #
 # numbers 147981..147998 not included because numbers after 9 must all be 9's
 # numbers 690000..691423 not included because ''
 # by checking if number ends in a zero or a 1 we achieve 11% speedup
