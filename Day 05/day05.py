@@ -1,91 +1,77 @@
+# ----------------------------------- Part 1 --------------------------------- #
 file = open('input.txt')
-string_list = file.readline().rstrip().split(',')
-instruction_list = [int(instruction) for instruction in string_list]
-instruction_listb = instruction_list[:]
+string_list = file.readline().split(',')
+instruction_list = [*map(int, string_list)]
+instruction_listb = instruction_list.copy()
 
 
 def intcode(input_val, ilist: list):
     k = 0
-
-    def advance(current_k, distance):
-        if current_k > len(ilist) - 1 - distance:  # if program isn't broken, this isn't needed
-            return len(ilist) - 1
-        else:
-            return current_k + distance
+    get = lambda mode, val: val if mode else ilist[val]
 
     def decipher(s: int):
         opcode = int(str(s)[-2:])
-        param_string = str(s)[:-2].zfill(5)[::-1]  # this width may have to change, I have no idea when though. This is the max amount of params any opcode can use.
-        if opcode == 99:
-            return {'opcode': opcode, 'modes': []}
-        elif opcode == 1:  # add
-            return {'opcode': opcode, 'modes': [int(i) for i in param_string[:2] + '0']}
-        elif opcode == 2:  # multiply
-            return {'opcode': opcode, 'modes': [int(i) for i in param_string[:2] + '0']}
-        elif opcode == 3:  # write to param
-            return {'opcode': opcode, 'modes': [0]}
-        elif opcode == 4:  # read from param
-            return {'opcode': opcode, 'modes': [int(param_string[0])]}
-        elif opcode == 5:  # jump if true
-            return {'opcode': opcode, 'modes': [int(i) for i in param_string[:2]]}
-        elif opcode == 6:  # jump if false
-            return {'opcode': opcode, 'modes': [int(i) for i in param_string[:2]]}
-        elif opcode == 7:  # less than
-            return {'opcode': opcode, 'modes': [int(i) for i in param_string[:2] + '0']}
-        elif opcode == 8:  # equals
-            return {'opcode': opcode, 'modes': [int(i) for i in param_string[:2] + '0']}
-        else:
-            raise ValueError('opcode {} is unknown from {}'.format(opcode, s))
+        param_string = str(s)[:-2].zfill(5)[::-1]
 
-    def val_mode(mode: int, val: int):
-        if mode == 0:  # position mode
-            return ilist[val]
-        elif mode == 1:  # immediate mode
-            return val
+        return {'code': opcode, 'modes': [*map(int, param_string[:2])]}
 
     while True:
-        if decipher(ilist[k])['opcode'] == 99:
+        s = ilist[k]
+        code = decipher(s)['code']
+
+        if code == 99:
             break
-        elif decipher(ilist[k])['opcode'] == 1:
-            calc = val_mode(decipher(ilist[k])['modes'][0], ilist[k + 1]) + val_mode(decipher(ilist[k])['modes'][1], ilist[k + 2])
-            ilist[ilist[k + 3]] = calc
-            k = advance(k, 4)
-        elif decipher(ilist[k])['opcode'] == 2:
-            calc = val_mode(decipher(ilist[k])['modes'][0], ilist[k + 1]) * val_mode(decipher(ilist[k])['modes'][1], ilist[k + 2])
-            ilist[ilist[k + 3]] = calc
-            k = advance(k, 4)
-        elif decipher(ilist[k])['opcode'] == 3:
+
+        elif code == 1:  # add
+            ilist[ilist[k + 3]] = get(decipher(s)['modes'][0], ilist[k + 1]) + get(decipher(s)['modes'][1], ilist[k + 2])
+
+        elif code == 2:  # multiply
+            ilist[ilist[k + 3]] = get(decipher(s)['modes'][0], ilist[k + 1]) * get(decipher(s)['modes'][1], ilist[k + 2])
+
+        elif code == 3:  # input
             ilist[ilist[k + 1]] = input_val
-            k = advance(k, 2)
-        elif decipher(ilist[k])['opcode'] == 4:
-            print(val_mode(decipher(ilist[k])['modes'][0], ilist[k + 1]))
-            k = advance(k, 2)
-        elif decipher(ilist[k])['opcode'] == 5:
-            if val_mode(decipher(ilist[k])['modes'][0], ilist[k + 1]):
-                k = val_mode(decipher(ilist[k])['modes'][1], ilist[k + 2])
-            else:
-                k = advance(k, 3)
-        elif decipher(ilist[k])['opcode'] == 6:
-            if not val_mode(decipher(ilist[k])['modes'][0], ilist[k + 1]):
-                k = val_mode(decipher(ilist[k])['modes'][1], ilist[k + 2])
-            else:
-                k = advance(k, 3)
-        elif decipher(ilist[k])['opcode'] == 7:
-            if val_mode(decipher(ilist[k])['modes'][0], ilist[k + 1]) < val_mode(decipher(ilist[k])['modes'][1], ilist[k + 2]):
-                ilist[ilist[k + 3]] = 1
-            else:
-                ilist[ilist[k + 3]] = 0
-            k = advance(k, 4)
-        elif decipher(ilist[k])['opcode'] == 8:
-            if val_mode(decipher(ilist[k])['modes'][0], ilist[k + 1]) == val_mode(decipher(ilist[k])['modes'][1], ilist[k + 2]):
-                ilist[ilist[k + 3]] = 1
-            else:
-                ilist[ilist[k + 3]] = 0
-            k = advance(k, 4)
+
+        elif code == 4:  # output
+            print(get(decipher(s)['modes'][0], ilist[k + 1]))
+
+        elif code == 5:  # jump if True
+            k = get(decipher(s)['modes'][1], ilist[k + 2]) if get(decipher(s)['modes'][0], ilist[k + 1]) else k + 3
+
+        elif code == 6:  # jump if False
+            k = get(decipher(s)['modes'][1], ilist[k + 2]) if not get(decipher(s)['modes'][0], ilist[k + 1]) else k + 3
+
+        elif code == 7:  # less than
+            ilist[ilist[k + 3]] = 1 if get(decipher(s)['modes'][0], ilist[k + 1]) < get(decipher(s)['modes'][1], ilist[k + 2]) else 0
+
+        elif code == 8:  # equals
+            ilist[ilist[k + 3]] = 1 if get(decipher(s)['modes'][0], ilist[k + 1]) == get(decipher(s)['modes'][1], ilist[k + 2]) else 0
+
+        if code in [1, 2, 7, 8]:
+            k += 4
+        elif code in [3, 4]:
+            k += 2
+
     return ilist
 
 print('Part 1:')
 intcode(1, instruction_list)
 
-print('Part 2:')
+# ----------------------------------- Part 2 --------------------------------- #
+print('\nPart 2:')
 intcode(5, instruction_listb)
+
+# ----------------------------------- Output --------------------------------- #
+# Part 1:
+# 0
+# 0
+# 0
+# 0
+# 0
+# 0
+# 0
+# 0
+# 0
+# 13787043
+#
+# Part 2:
+# 3892695
