@@ -6,9 +6,8 @@ dx = {'L': -1, 'R': 1, 'U': 0, 'D': 0}
 dy = {'L': 0, 'R': 0, 'D': -1, 'U': 1}
 
 
-def points(ilist: list):
+def points(ilist: list, x=0, y=0, acc=0):
     pointlist = {}
-    x, y, acc = 0, 0, 0
 
     for instruction in ilist:
         direction = instruction[0]

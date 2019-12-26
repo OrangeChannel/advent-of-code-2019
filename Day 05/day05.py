@@ -5,8 +5,7 @@ instruction_list = [*map(int, string_list)]
 instruction_listb = instruction_list.copy()
 
 
-def intcode(input_val, ilist: list):
-    k = 0
+def intcode(input_val, ilist: list, k=0):
     get = lambda mode, val: val if mode else ilist[val]
 
     def decipher(s: int):
