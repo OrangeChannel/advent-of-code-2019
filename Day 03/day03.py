@@ -1,43 +1,37 @@
-# ----------------------------------- Part 1 --------------------------------- #
 file = open('input.txt')
 awire = file.readline().split(',')
 bwire = file.readline().split(',')
+
+# ----------------------------------- Part 1 --------------------------------- #
 dx = {'L': -1, 'R': 1, 'U': 0, 'D': 0}
 dy = {'L': 0, 'R': 0, 'D': -1, 'U': 1}
-
 
 def points(ilist: list, x=0, y=0, acc=0):
     pointlist = {}
 
     for instruction in ilist:
-        direction = instruction[0]
-        length = int(instruction[1:])
+        direction, length = instruction[0], int(instruction[1:])
 
         for i in range(1, length + 1):
             x += dx[direction]
             y += dy[direction]
 
-            if (x, y) not in pointlist:
-                pointlist[(x, y)] = acc + i
+            if (x, y) not in pointlist: pointlist[(x, y)] = acc + i
 
         acc += length
 
     return pointlist
 
+common = (apoints := points(awire)).keys() & (bpoints := points(bwire)).keys()
 
-apoints = points(awire)
-bpoints = points(bwire)
-common_points = apoints.keys() & bpoints.keys()
-
-dists = [abs(x) + abs(y) for (x, y) in common_points]
-
-print('Part 1: {}'.format(min(dists)))
+print('Part 1: {}'.format(min([abs(x) + abs(y) for (x, y) in common])))
 
 # ----------------------------------- Part 2 --------------------------------- #
-paths = [apoints[i] + bpoints[i] for i in common_points]
-
-print('Part 2: {}'.format(min(paths)))
+print('Part 2: {}'.format(min([apoints[i] + bpoints[i] for i in common])))
 
 # ----------------------------------- Output --------------------------------- #
 # Part 1: 225
 # Part 2: 35194
+
+# Time (mean ± σ):     153.9 ms ±   1.1 ms    [User: 132.3 ms, System: 21.5 ms]
+# Range (min … max):   152.9 ms … 157.4 ms    19 runs
