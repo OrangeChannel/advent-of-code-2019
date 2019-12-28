@@ -2,7 +2,7 @@ string_list = open('input.txt').readline().split(',')
 instruction_listb = (instruction_list := [*map(int, string_list)]).copy()
 
 # ----------------------------------- Part 1 --------------------------------- #
-def intcode(input_val, ilist: list, k=0):
+def intcode(input_val, ilist, k=0):
     get = lambda mode, val: val if mode else ilist[val]
 
     def decipher(s: int):
@@ -11,11 +11,9 @@ def intcode(input_val, ilist: list, k=0):
 
         return {'code': opcode, 'modes': [*map(int, param_string[:2])]}
 
-    while True:
-        code = decipher(s := ilist[k])['code']
+    while (code := decipher(s := ilist[k])['code']) != 99:
 
-        if code == 99: break
-        elif code == 1:  # add
+        if code == 1:  # add
             ilist[ilist[k + 3]] = get(decipher(s)['modes'][0], ilist[k + 1]) + \
                                   get(decipher(s)['modes'][1], ilist[k + 2])
         elif code == 2:  # multiply
@@ -68,5 +66,5 @@ intcode(5, instruction_listb)
 # Part 2:
 # 3892695
 
-# Time (mean ± σ):      17.1 ms ±   0.2 ms    [User: 14.1 ms, System: 3.0 ms]
-# Range (min … max):    16.8 ms …  18.0 ms    156 runs
+# Time (mean ± σ):      17.1 ms ±   0.1 ms    [User: 14.5 ms, System: 2.7 ms]
+# Range (min … max):    16.8 ms …  17.5 ms    156 runs

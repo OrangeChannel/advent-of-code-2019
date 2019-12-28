@@ -22,7 +22,6 @@ def travel(pset, ckey, sset=None, dist=0):
     if pset[ckey] in pset.keys():
         sset[pset[ckey]] = dist
         return travel(pset, pset[ckey], sset, dist + 1)
-
     else: return sset
 
 a, b = travel(parents, 'YOU'), travel(parents, 'SAN')

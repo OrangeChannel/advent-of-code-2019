@@ -1,10 +1,8 @@
 file = open('input.txt')
-awire = file.readline().split(',')
-bwire = file.readline().split(',')
+awire, bwire = file.readline().split(','), file.readline().split(',')
 
 # ----------------------------------- Part 1 --------------------------------- #
-dx = {'L': -1, 'R': 1, 'U': 0, 'D': 0}
-dy = {'L': 0, 'R': 0, 'D': -1, 'U': 1}
+dx, dy = {'L': -1, 'R': 1, 'U': 0, 'D': 0}, {'L': 0, 'R': 0, 'D': -1, 'U': 1}
 
 def points(ilist: list, x=0, y=0, acc=0):
     pointlist = {}
@@ -13,9 +11,7 @@ def points(ilist: list, x=0, y=0, acc=0):
         direction, length = instruction[0], int(instruction[1:])
 
         for i in range(1, length + 1):
-            x += dx[direction]
-            y += dy[direction]
-
+            x, y = x + dx[direction], y + dy[direction]
             if (x, y) not in pointlist: pointlist[(x, y)] = acc + i
 
         acc += length

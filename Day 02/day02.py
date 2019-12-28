@@ -3,14 +3,12 @@ goal = 19690720
 
 # ----------------------------------- Part 1 --------------------------------- #
 def intcode(ilist):
-    for k in range(0, len(olist := ilist.copy()), 4):
-        if (opcode := olist[k]) == 99: break
-        elif opcode == 1:  # add
-            olist[olist[k + 3]] = olist[olist[k + 1]] + olist[olist[k + 2]]
-        elif opcode == 2:  # multiply
-            olist[olist[k + 3]] = olist[olist[k + 1]] * olist[olist[k + 2]]
+    for k in range(0, len(out := ilist.copy()), 4):
+        if (opcode := out[k]) == 99: break
+        elif opcode == 1: out[out[k + 3]] = out[out[k + 1]] + out[out[k + 2]]
+        elif opcode == 2: out[out[k + 3]] = out[out[k + 1]] * out[out[k + 2]]
 
-    return olist
+    return out
 
 instruction_list[1:3] = 12, 2
 
@@ -18,7 +16,6 @@ print('Part 1: {}'.format(intcode(instruction_list)[0]))
 
 # ----------------------------------- Part 2 --------------------------------- #
 from itertools import product
-
 
 for noun, verb in product(range(100), range(0, 100, 2)):
     instruction_list[1:3] = noun, verb

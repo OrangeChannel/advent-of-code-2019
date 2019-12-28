@@ -21,7 +21,6 @@ print('Part 2: {}'.format(part2))
 # Time (mean ± σ):     294.9 ms ±   2.6 ms    [User: 292.0 ms, System: 2.9 ms]
 # Range (min … max):   291.7 ms … 299.5 ms    10 runs
 
-
 # ----------------------------------- Notes ---------------------------------- #
 # numbers 147981..147998 not included because numbers after 9 must all be 9's
 # numbers 690000..691423 not included because ''
