@@ -1,3 +1,4 @@
+from itertools import product
 instruction_list = [*map(int, open('input.txt').readline().split(','))]
 goal = 19690720
 
@@ -15,8 +16,6 @@ instruction_list[1:3] = 12, 2
 print('Part 1: {}'.format(intcode(instruction_list)[0]))
 
 # ----------------------------------- Part 2 --------------------------------- #
-from itertools import product
-
 for noun, verb in product(range(100), range(0, 100, 2)):
     instruction_list[1:3] = noun, verb
 
