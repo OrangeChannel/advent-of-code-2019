@@ -8,27 +8,27 @@ def intcode(input_val, ilist, k=0):
 
     while (code := (s := ilist[k]) % 100) != 99:
         if code == 1:  # add
-            ilist[ilist[k + 3]] = get(modes(s)[0], ilist[k + 1]) + \
-                                  get(modes(s)[1], ilist[k + 2])
+            ilist[ilist[k + 3]] = get((m := modes(s))[0], ilist[k + 1]) + \
+                                  get(m[1], ilist[k + 2])
         elif code == 2:  # multiply
-            ilist[ilist[k + 3]] = get(modes(s)[0], ilist[k + 1]) * \
-                                  get(modes(s)[1], ilist[k + 2])
+            ilist[ilist[k + 3]] = get((m := modes(s))[0], ilist[k + 1]) * \
+                                  get(m[1], ilist[k + 2])
         elif code == 3:  # input
             ilist[ilist[k + 1]] = input_val
         elif code == 4:  # output
             print(get(modes(s)[0], ilist[k + 1]))
         elif code == 5:  # jump if True
-            k = get(modes(s)[1], ilist[k + 2]) if \
-                get(modes(s)[0], ilist[k + 1]) else k + 3
+            k = get(m[1], ilist[k + 2]) if \
+                get((m := modes(s))[0], ilist[k + 1]) else k + 3
         elif code == 6:  # jump if False
-            k = get(modes(s)[1], ilist[k + 2]) if not \
-                get(modes(s)[0], ilist[k + 1]) else k + 3
+            k = get(m[1], ilist[k + 2]) if not \
+                get((m := modes(s))[0], ilist[k + 1]) else k + 3
         elif code == 7:  # less than
-            ilist[ilist[k + 3]] = 1 if get(modes(s)[0], ilist[k + 1]) < \
-                                       get(modes(s)[1], ilist[k + 2]) else 0
+            ilist[ilist[k + 3]] = 1 if get((m := modes(s))[0], ilist[k + 1]) < \
+                                       get(m[1], ilist[k + 2]) else 0
         elif code == 8:  # equals
-            ilist[ilist[k + 3]] = 1 if get(modes(s)[0], ilist[k + 1]) == \
-                                       get(modes(s)[1], ilist[k + 2]) else 0
+            ilist[ilist[k + 3]] = 1 if get((m := modes(s))[0], ilist[k + 1]) == \
+                                       get(m[1], ilist[k + 2]) else 0
 
         if code in [1, 2, 7, 8]: k += 4
         elif code in [3, 4]: k += 2
