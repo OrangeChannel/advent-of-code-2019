@@ -1,5 +1,5 @@
-l, parents = [line.rstrip().split(')') for line in open('input.txt')], {}
-for k, v in enumerate([i[1] for i in l]): parents[v] = [i[0] for i in l][k]
+l= [line.rstrip().split(')') for line in open('input.txt')]
+parents = {v:[i[0] for i in l][k] for k, v in enumerate([i[1] for i in l])}
 def dst(pset, ckey, dist_dict=None, d=1):
     if (parent := pset[ckey]) in pset.keys():
         if dist_dict is not None: dist_dict[parent] = d - 1  # part 1

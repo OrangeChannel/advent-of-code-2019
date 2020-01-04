@@ -1,6 +1,6 @@
 start, end = 147981, 691423
 
-# ----------------------------------- Part 1 --------------------------------- #
+# --------------------------------- Part 1 + 2 ------------------------------- #
 part1, part2 = 0, 0
 
 for i in range(start + 18, end - 1423):
@@ -9,10 +9,7 @@ for i in range(start + 18, end - 1423):
             if len(set(chars)) < len(chars): part1 += 1
             if 2 in [chars.count(number) for number in chars]: part2 += 1
 
-print('Part 1: {}'.format(part1))
-
-# ----------------------------------- Part 2 --------------------------------- #
-print('Part 2: {}'.format(part2))
+print('Part 1: {}\nPart 2: {}'.format(part1, part2))
 
 # ----------------------------------- Output --------------------------------- #
 # Part 1: 1790

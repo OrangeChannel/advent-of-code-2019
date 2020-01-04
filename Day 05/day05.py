@@ -1,7 +1,7 @@
 string_list = open('input.txt').readline().split(',')
 instruction_listb = (instruction_list := [*map(int, string_list)]).copy()
 
-# ----------------------------------- Part 1 --------------------------------- #
+# --------------------------------- Part 1 + 2 ------------------------------- #
 def intcode(input_val, ilist, k=0):
     get = lambda mode, val: val if mode else ilist[val]
     modes = lambda i: [*map(int, str(i)[:-2].zfill(2)[::-1][:2])]
@@ -36,7 +36,6 @@ def intcode(input_val, ilist, k=0):
 print('Part 1:')
 intcode(1, instruction_list)
 
-# ----------------------------------- Part 2 --------------------------------- #
 print('\nPart 2:')
 intcode(5, instruction_listb)
 
