@@ -1,6 +1,5 @@
-""" 185 chars, 5 lines, 462 ms """
-a, b = 0, 0
-for i in range(147981, 691423):
+""" 196 chars, 4 lines, 462 ms """
+for i in range((a := 0) + 147981, (b := 0) + 691423):
     if sorted(r := list(str(i))) == r and len(set(r)) < len(r): a += 1
     if sorted(r) == r and 2 in [r.count(c) for c in r]: b += 1
 print(a, b)
